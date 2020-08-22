@@ -1,0 +1,8 @@
+cluster.name: es-spiegel-utils
+node.name: es-spiegel-utils-1
+xpack.security.enabled: false
+#http.cors.enabled: true
+#http.cors.allow-origin: '*'
+http.host: 0.0.0.0
+http.port: 9201
+transport.host: 127.0.0.1

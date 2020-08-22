@@ -1,0 +1,27 @@
+{
+  "url":  "https://www.spiegel.de/international/",
+  "time_interval_min": 15,
+  "elasticsearch": {
+    "path": "http://elasticsearch:9201",
+    "index": "spiegel-international-news"
+  },
+  "logging": {
+    "version": 1,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "WARNING"
+
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "level": "INFO",
+            "filename": "crawler.log"
+        }
+    },
+    "root": {
+        "handlers": ["console", "file"],
+        "level": "INFO"
+    }
+}
+}

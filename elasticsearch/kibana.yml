@@ -1,0 +1,5 @@
+elasticsearch.url: "http://elasticsearch:9201"
+server.name: "kibana-spiegel-utils"
+server.port: 5602
+server.host: 0.0.0.0
+xpack.security.enabled: false

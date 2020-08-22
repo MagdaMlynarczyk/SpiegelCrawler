@@ -1,0 +1,32 @@
+version: '2'
+services:
+  crawler:
+    build: .
+    image: spiegel-crawler:1.0
+    container_name: "spiegel-crawler"
+    ports: ["5000:5000"]
+    command: "python app.py"
+    networks:
+      - default
+    depends_on:
+      - elasticsearch
+
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.1
+    container_name: "elasticsearch"
+    ports: ["9200:9200"]
+    volumes:
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - default
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.1
+    container_name: kibana-spiegel-utils
+    ports: ['5602:5602']
+    volumes:
+      - ./elasticsearch/kibana.yml:/usr/share/kibana/config/kibana.yml
+    depends_on: ['elasticsearch']
+    networks:
+      - default
