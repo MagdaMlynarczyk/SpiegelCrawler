@@ -7,16 +7,23 @@
   },
   "logging": {
     "version": 1,
+       "formatters" : {
+        "f": {
+          "format": "%(asctime)s: %(levelname)s: %(message)s",
+          "formatTime":  "%Y-%m-%d %H:%M:%S"}
+        },
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
-            "level": "WARNING"
+            "level": "INFO",
+             "formatter": "f"
 
         },
         "file": {
             "class": "logging.FileHandler",
             "level": "INFO",
-            "filename": "crawler.log"
+            "filename": "crawler.log",
+            "formatter": "f"
         }
     },
     "root": {

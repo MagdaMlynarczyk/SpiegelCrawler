@@ -1,13 +1,13 @@
+import datetime
+import logging.config
+
 from flask import Flask
 from config import config
-
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from utils.elastic import ElasticConnector
 from utils.crawler import SpiegelCrawler
 
-import datetime
-import logging.config
 
 logging.basicConfig()
 logging.config.dictConfig(config['logging'])
@@ -21,9 +21,10 @@ cs = SpiegelCrawler(
 
 
 def run_crawler():
+    """Defines a function to be scheduled"""
     data = cs.crawl()
     ec.save_data(data)
-    return 'Crawling done'
+    return
 
 
 bs = BackgroundScheduler()
@@ -36,11 +37,9 @@ bs.start()
 
 app = Flask(__name__)
 
-
-@app.route('/')
-def home_page():
-    return 'Spiegel International News Crawler'
-
+# @app.route('/')
+# def home_page():
+#     return 'Spiegel International News Crawler'
 
 if __name__ == '__main__':
     app.run()
