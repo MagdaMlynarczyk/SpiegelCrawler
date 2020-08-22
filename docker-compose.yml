@@ -5,7 +5,9 @@ services:
     image: spiegel-crawler:1.0
     container_name: "spiegel-crawler"
     ports: ["5000:5000"]
-    command: "python app.py"
+    volumes:
+      - ./wait-for-it.sh:/crawler/wait-for-it.sh
+    command: bash -c "/crawler/wait-for-it.sh elasticsearch:9201 -t 60 && python app.py"
     networks:
       - default
     depends_on:

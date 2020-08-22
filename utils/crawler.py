@@ -53,10 +53,10 @@ class SpiegelCrawler:
         return page.findAll('article')
 
     def _parse_article(self, art):
-        """Extract relevant information from source article
+        """Extract relevant information from a source article
 
         :param
-            art (bs4.element.Tag): part of the html containing data about one article
+            art (bs4.element.Tag): part of the html containing data about an article
 
         :return dict: The dictionary keys are:
             id (str): link to the article
@@ -64,8 +64,8 @@ class SpiegelCrawler:
                 title (str): title of the article
                 header (str): header of the article
                 abstract (str): abstract of the article
-                orig-time (str): timestamp current crawling of the article
-                update-time (str): the same as orig-timestamp
+                orig-time (str): timestamp of the current crawling of the article
+                update-time (str): the same as orig-time
         """
         link = art.find('a')['href']
 

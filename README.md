@@ -9,28 +9,28 @@ docker-compose up -d
 ```
 
 #### Solution description:
-The solution contains of tho main components: Flask application and Elasticsearch Database. 
+The solution consists of two main components: a Flask application and an Elasticsearch Database. 
 Both of them are deployed with docker.
 
-I have chosen Elasticsearch as an adequate database because it is an open-source solution for managing text data. 
+I have chosen Elasticsearch as the adequate database because it is an open-source solution for managing text data. 
 Moreover, there is an official client for Python. For bigger project it has also the advantage of being distributed.
 
 At the beginning, it is being checked if the relevant index in the database exists. If not, it is being created.
 
 Secondly, the flask application calls the crawl method of the SpiegelCrawler class. 
 It crawls the www.spiegel.de/international webpage and search for articles abstracts on it.
-It extracts all the relevant to the task metadata of the articles: the article title, header (a text that appears
+It extracts all the metadata relevant to the task: the article title, header (a text that appears
 below or above the title with smaller font), the abstract, the url of the target article and the timestamp of when it was called.
 
-In my solution I have decided to use an article url as an article id. 
+In my solution I have decided to use an article url as the article id. 
 
 Next, the save_data of the ElasticConnector is called. The ElasticConnector class allows to communicate with the database.
-For each crawled article it checks if it is already has been saved in the database - based on the article id. If so, the article is
+For each crawled article it checks if it has already been saved in the database - based on the article id. If yes, the article is
 not being loaded to the database again, only the 'update-time' attribute of the document is being updated to the current crawling timestamp.
-Otherwise all the metadata of the article is being saved to the Elasticsearch 
+Otherwise the whole metadata of the article is being saved to the Elasticsearch 
 
 The pipeline of crawling the data and updating the database is being scheduled to run automatically every 15 minutes (the time interval
-between the calls can be easily change in the config file)
+between the calls can be easily changed in the config file)
 
 Notes:
 
@@ -39,9 +39,11 @@ Notes:
 2. *Kibana* is an additional component. I've used it during the development process. Now it can 
 be useful for browsing the SpiegelCrawler results.
 
-3. I have not deployed the solution using Web Service, although it would be necessary in a production solution.
+3. I have not deployed the solution using a web server like WSGI/Gunicorn, although it would be necessary in a production solution.
 
-4. Next step to improve the solution would be to write units tests.
+4. Given more time I would cover the codebase with unit/integration tests with mocked requests.
+
+5. 4GB of RAM might be required to run the application.
 
 #### Useful commands:
 ##### Accessing the log file:
@@ -62,9 +64,9 @@ GET spiegel-international-news/_search
   }
 }
 ```
-Note, that the match_phrase query in case insensitive.
+Note, that the match_phrase query in case-insensitive.
 
-Analogous, searching for the article based on article title
+Analogously, a search for the article based on article title
 ```
 GET spiegel-international-news/_search
 {
@@ -76,7 +78,7 @@ GET spiegel-international-news/_search
 }
 ```
 
-Searching for the article based on id:
+A search for the article based on id:
 ```
 GET spiegel-international-news/_search
 {
@@ -88,8 +90,8 @@ GET spiegel-international-news/_search
 }
 ```
 
-Moreover, we can search for the articles that abstracts are most similar to what we are looking for.
-For example, if we would like to find any information about "pandemic influence on the climate", we can search for the article that abstract matces to ur query:
+Moreover, we can search for the articles whose abstracts are most similar to what we are looking for.
+For example, if we want to find any information about "pandemic influence on the climate", we can search for the article whose abstract matches to our query:
 ```
 GET spiegel-international-news/_search
 {
